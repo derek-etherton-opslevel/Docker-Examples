@@ -1,0 +1,30 @@
+<h1>Admin - All Users</h1>
+
+<table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+  <thead>
+    <tr style="background: #2c3e50; color: white;">
+      <th style="padding: 1rem; text-align: left;">Username</th>
+      <th style="padding: 1rem; text-align: left;">Email</th>
+      <th style="padding: 1rem; text-align: left;">Role</th>
+      <th style="padding: 1rem; text-align: left;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr style="border-bottom: 1px solid #ddd;">
+        <td style="padding: 1rem;"><%= user.username %></td>
+        <td style="padding: 1rem;"><%= user.email %></td>
+        <td style="padding: 1rem;"><%= user.role %></td>
+        <td style="padding: 1rem;">
+          <%= link_to "Edit", edit_admin_user_path(user), class: "btn", style: "font-size: 0.9rem; padding: 0.3rem 0.6rem;" %>
+          <%= link_to "Delete", admin_user_path(user), method: :delete, 
+              data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "font-size: 0.9rem; padding: 0.3rem 0.6rem;" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @users.empty? %>
+  <p>No users yet.</p>
+<% end %>

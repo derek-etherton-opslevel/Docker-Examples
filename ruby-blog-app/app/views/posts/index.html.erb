@@ -1,0 +1,16 @@
+<h1>Blog Posts</h1>
+
+<% @posts.each do |post| %>
+  <div class="post">
+    <h2><%= link_to post.title, post_path(post) %></h2>
+    <div class="post-meta">
+      By <%= post.user.username %> on <%= post.created_at.strftime("%B %d, %Y") %>
+    </div>
+    <p><%= truncate(post.content, length: 200) %></p>
+    <%= link_to "Read more", post_path(post), class: "btn" %>
+  </div>
+<% end %>
+
+<% if @posts.empty? %>
+  <p>No posts yet. <%= link_to "Create the first post", new_post_path if logged_in? %></p>
+<% end %>

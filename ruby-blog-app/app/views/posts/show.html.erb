@@ -1,0 +1,50 @@
+<div class="post">
+  <h1><%= @post.title %></h1>
+  <div class="post-meta">
+    By <%= @post.user.username %> on <%= @post.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+  </div>
+  <div style="margin-top: 1.5rem; line-height: 1.8;">
+    <%= simple_format(@post.content) %>
+  </div>
+  
+  <% if logged_in? && (@post.user == current_user || current_user.admin?) %>
+    <div style="margin-top: 1.5rem;">
+      <%= link_to "Edit", edit_post_path(@post), class: "btn" %>
+      <%= link_to "Delete", post_path(@post), method: :delete, 
+          data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+    </div>
+  <% end %>
+</div>
+
+<h2 style="margin-top: 2rem; margin-bottom: 1rem;">Comments</h2>
+
+<% if logged_in? %>
+  <%= form_with model: [@post, @comment], local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :content, "Add a comment" %>
+      <%= f.text_area :content, rows: 4 %>
+    </div>
+    <%= f.submit "Post Comment", class: "btn" %>
+  <% end %>
+<% else %>
+  <p><%= link_to "Login", login_path %> to post comments.</p>
+<% end %>
+
+<div style="margin-top: 2rem;">
+  <% @comments.each do |comment| %>
+    <div class="post" style="margin-bottom: 1rem;">
+      <div class="post-meta">
+        <strong><%= comment.user.username %></strong> - <%= comment.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+      </div>
+      <p><%= simple_format(comment.content) %></p>
+      <% if logged_in? && (comment.user == current_user || current_user.admin?) %>
+        <%= link_to "Delete", post_comment_path(@post, comment), method: :delete, 
+            data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "font-size: 0.9rem; padding: 0.3rem 0.6rem;" %>
+      <% end %>
+    </div>
+  <% end %>
+  
+  <% if @comments.empty? %>
+    <p>No comments yet. Be the first to comment!</p>
+  <% end %>
+</div>

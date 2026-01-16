@@ -1,0 +1,16 @@
+<h1><%= @user.username %>'s Profile</h1>
+
+<h2>Posts</h2>
+
+<% @posts.each do |post| %>
+  <div class="post">
+    <h3><%= link_to post.title, post_path(post) %></h3>
+    <div class="post-meta">
+      <%= post.created_at.strftime("%B %d, %Y") %>
+    </div>
+  </div>
+<% end %>
+
+<% if @posts.empty? %>
+  <p>This user hasn't published any posts yet.</p>
+<% end %>

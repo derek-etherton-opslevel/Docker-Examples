@@ -1,0 +1,26 @@
+<h1>Admin Dashboard</h1>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+  <div class="post">
+    <h3>Posts</h3>
+    <p style="font-size: 2rem; font-weight: bold;"><%= @posts_count %></p>
+  </div>
+  <div class="post">
+    <h3>Users</h3>
+    <p style="font-size: 2rem; font-weight: bold;"><%= @users_count %></p>
+  </div>
+  <div class="post">
+    <h3>Comments</h3>
+    <p style="font-size: 2rem; font-weight: bold;"><%= @comments_count %></p>
+  </div>
+</div>
+
+<h2>Recent Posts</h2>
+<% @recent_posts.each do |post| %>
+  <div class="post">
+    <h3><%= link_to post.title, post_path(post) %></h3>
+    <div class="post-meta">
+      By <%= post.user.username %> - <%= post.published? ? "Published" : "Draft" %>
+    </div>
+  </div>
+<% end %>

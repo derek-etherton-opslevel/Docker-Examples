@@ -1,0 +1,16 @@
+version: '3.8'
+
+# Development overrides for docker-compose.yml
+# Use with: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder  # Use builder stage for development
+    environment:
+      FLASK_DEBUG: "True"
+    volumes:
+      - .:/app
+    command: python app.py

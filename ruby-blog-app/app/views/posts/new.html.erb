@@ -1,0 +1,21 @@
+<h1>New Post</h1>
+
+<%= form_with model: @post, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :content %>
+    <%= f.text_area :content, rows: 15 %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.check_box :published %>
+    <%= f.label :published, "Publish immediately" %>
+  </div>
+  
+  <%= f.submit "Create Post", class: "btn" %>
+  <%= link_to "Cancel", posts_path, class: "btn", style: "background: #95a5a6;" %>
+<% end %>
