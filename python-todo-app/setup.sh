@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Setup script for Python Todo App
-# This script checks for Docker installation and sets up the development environment
+# This script checks for Podman installation and sets up the development environment
 
 set -e
 
@@ -18,43 +18,37 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Check for Docker
-echo -e "\n${YELLOW}Checking for Docker...${NC}"
-if ! command_exists docker; then
-    echo -e "${RED}Docker is not installed.${NC}"
-    echo "Please install Docker from https://docs.docker.com/get-docker/"
+# Check for Podman
+echo -e "\n${YELLOW}Checking for Podman...${NC}"
+if ! command_exists podman; then
+    echo -e "${RED}Podman is not installed.${NC}"
+    echo "Please install Podman from https://podman.io/getting-started/installation"
     exit 1
 else
-    DOCKER_VERSION=$(docker --version)
-    echo -e "${GREEN}✓ Docker found: ${DOCKER_VERSION}${NC}"
+    PODMAN_VERSION=$(podman --version)
+    echo -e "${GREEN}✓ Podman found: ${PODMAN_VERSION}${NC}"
 fi
 
-# Check for Docker Compose
-echo -e "\n${YELLOW}Checking for Docker Compose...${NC}"
-if ! command_exists docker-compose && ! docker compose version >/dev/null 2>&1; then
-    echo -e "${RED}Docker Compose is not installed.${NC}"
-    echo "Please install Docker Compose from https://docs.docker.com/compose/install/"
+# Check for Podman Compose
+echo -e "\n${YELLOW}Checking for Podman Compose...${NC}"
+if ! command_exists podman-compose; then
+    echo -e "${RED}Podman Compose is not installed.${NC}"
+    echo "Please install Podman Compose from https://github.com/containers/podman-compose"
     exit 1
 else
-    if command_exists docker-compose; then
-        COMPOSE_VERSION=$(docker-compose --version)
-        echo -e "${GREEN}✓ Docker Compose found: ${COMPOSE_VERSION}${NC}"
-        COMPOSE_CMD="docker-compose"
-    else
-        COMPOSE_VERSION=$(docker compose version)
-        echo -e "${GREEN}✓ Docker Compose found: ${COMPOSE_VERSION}${NC}"
-        COMPOSE_CMD="docker compose"
-    fi
+    COMPOSE_VERSION=$(podman-compose --version)
+    echo -e "${GREEN}✓ Podman Compose found: ${COMPOSE_VERSION}${NC}"
+    COMPOSE_CMD="podman-compose"
 fi
 
-# Check if Docker daemon is running
-echo -e "\n${YELLOW}Checking Docker daemon...${NC}"
-if ! docker info >/dev/null 2>&1; then
-    echo -e "${RED}Docker daemon is not running.${NC}"
-    echo "Please start Docker Desktop or the Docker daemon."
+# Check if Podman is running
+echo -e "\n${YELLOW}Checking Podman...${NC}"
+if ! podman info >/dev/null 2>&1; then
+    echo -e "${RED}Podman is not accessible.${NC}"
+    echo "Please check your Podman installation."
     exit 1
 else
-    echo -e "${GREEN}✓ Docker daemon is running${NC}"
+    echo -e "${GREEN}✓ Podman is running${NC}"
 fi
 
 # Create .env file if it doesn't exist
@@ -67,7 +61,7 @@ else
 fi
 
 # Build and start containers
-echo -e "\n${YELLOW}Building Docker images...${NC}"
+echo -e "\n${YELLOW}Building container images...${NC}"
 $COMPOSE_CMD build
 
 echo -e "\n${YELLOW}Starting containers...${NC}"
