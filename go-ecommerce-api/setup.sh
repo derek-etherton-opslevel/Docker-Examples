@@ -4,16 +4,17 @@ set -e
 
 echo "🚀 Setting up Go E-commerce API..."
 
-# Check if Docker is installed
-if ! command -v docker &> /dev/null; then
-    echo "❌ Docker is not installed. Please install Docker first."
-    echo "Visit: https://docs.docker.com/get-docker/"
+# Check if Podman is installed
+if ! command -v podman &> /dev/null; then
+    echo "❌ Podman is not installed. Please install Podman first."
+    echo "Visit: https://podman.io/getting-started/installation"
     exit 1
 fi
 
-# Check if Docker Compose is installed
-if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
-    echo "❌ Docker Compose is not installed. Please install Docker Compose first."
+# Check if Podman Compose is installed
+if ! command -v podman-compose &> /dev/null; then
+    echo "❌ Podman Compose is not installed. Please install Podman Compose first."
+    echo "Visit: https://github.com/containers/podman-compose"
     exit 1
 fi
 
@@ -47,11 +48,11 @@ EOF
 fi
 
 # Build and start services
-echo "🔨 Building Docker images..."
-docker-compose build
+echo "🔨 Building Podman images..."
+podman-compose -f podman-compose.yml build
 
 echo "🚀 Starting services..."
-docker-compose up -d
+podman-compose -f podman-compose.yml up -d
 
 echo "⏳ Waiting for services to be healthy..."
 sleep 10
@@ -61,7 +62,7 @@ echo "📊 Initializing Elasticsearch indices..."
 sleep 5
 
 # Check if services are running
-if docker-compose ps | grep -q "Up"; then
+if podman-compose -f podman-compose.yml ps | grep -q "Up"; then
     echo "✅ All services are running!"
     echo ""
     echo "📍 API available at: http://localhost:8080"
@@ -75,9 +76,9 @@ if docker-compose ps | grep -q "Up"; then
     echo "  PUT    /api/products/{id}"
     echo "  DELETE /api/products/{id}"
     echo ""
-    echo "To stop services: docker-compose down"
-    echo "To view logs: docker-compose logs -f"
+    echo "To stop services: podman-compose -f podman-compose.yml down"
+    echo "To view logs: podman-compose -f podman-compose.yml logs -f"
 else
-    echo "❌ Some services failed to start. Check logs with: docker-compose logs"
+    echo "❌ Some services failed to start. Check logs with: podman-compose -f podman-compose.yml logs"
     exit 1
 fi
