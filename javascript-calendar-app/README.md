@@ -1,6 +1,6 @@
 # Calendar App
 
-A full-stack calendar application built with React (Vite) frontend, Express.js backend, and MongoDB database. This project demonstrates Docker containerization with multi-stage builds, separate frontend/backend containers, and service orchestration.
+A full-stack calendar application built with React (Vite) frontend, Express.js backend, and MongoDB database. This project demonstrates Podman containerization with multi-stage builds, separate frontend/backend containers, and service orchestration.
 
 ## Features
 
@@ -8,8 +8,8 @@ A full-stack calendar application built with React (Vite) frontend, Express.js b
 - ➕ Create, edit, and delete events
 - 🎨 Color-coded events
 - 💾 Persistent data storage with MongoDB
-- 🐳 Fully containerized with Docker Compose
-- 🚀 Multi-stage Docker builds for optimization
+- 🐳 Fully containerized with Podman Compose
+- 🚀 Multi-stage container builds for optimization
 - 🔄 Hot reload in development mode
 
 ## Tech Stack
@@ -26,7 +26,7 @@ A full-stack calendar application built with React (Vite) frontend, Express.js b
 - **MongoDB** - Database
 - **Mongoose** - ODM
 
-### Docker
+### Podman
 - Multi-stage builds for optimized images
 - Separate containers for frontend, backend, and database
 - Network isolation between services
@@ -34,8 +34,8 @@ A full-stack calendar application built with React (Vite) frontend, Express.js b
 
 ## Prerequisites
 
-- Docker (version 20.10 or later)
-- Docker Compose (version 2.0 or later)
+- Podman (version 4.0 or later)
+- Podman Compose (version 1.0 or later)
 
 ## Quick Start
 
@@ -46,9 +46,9 @@ A full-stack calendar application built with React (Vite) frontend, Express.js b
    cd javascript-calendar-app
    ```
 
-2. Start all services with Docker Compose:
+2. Start all services with Podman Compose:
    ```bash
-   docker-compose up -d
+   podman-compose up -d
    ```
 
 3. Access the application:
@@ -58,7 +58,7 @@ A full-stack calendar application built with React (Vite) frontend, Express.js b
 
 4. Stop the services:
    ```bash
-   docker-compose down
+   podman-compose down
    ```
 
 ### Development Mode
@@ -67,7 +67,7 @@ For development with hot reload:
 
 1. Start services in development mode:
    ```bash
-   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+   podman-compose -f docker-compose.yml -f docker-compose.dev.yml up
    ```
 
 2. Access the application:
@@ -96,7 +96,7 @@ javascript-calendar-app/
 │   ├── nginx.conf
 │   ├── vite.config.js
 │   ├── package.json
-│   └── .dockerignore
+│   └── .containerignore
 ├── backend/
 │   ├── models/
 │   │   └── Event.js
@@ -105,14 +105,14 @@ javascript-calendar-app/
 │   ├── server.js
 │   ├── Dockerfile
 │   ├── package.json
-│   └── .dockerignore
+│   └── .containerignore
 ├── docker-compose.yml
 ├── docker-compose.dev.yml
 ├── .gitignore
 └── README.md
 ```
 
-## Docker Architecture
+## Container Architecture
 
 ### Multi-Stage Builds
 
@@ -134,7 +134,7 @@ javascript-calendar-app/
 
 All services communicate through a custom bridge network (`calendar-network`), providing:
 - Service discovery by container name
-- Network isolation from other Docker networks
+- Network isolation from other container networks
 - Internal communication without exposing ports unnecessarily
 
 ## API Endpoints
@@ -165,7 +165,7 @@ All services communicate through a custom bridge network (`calendar-network`), p
 
 ## Development
 
-### Running Locally (without Docker)
+### Running Locally (without Podman)
 
 #### Backend
 
@@ -187,22 +187,22 @@ npm run dev
 
 Build all images:
 ```bash
-docker-compose build
+podman-compose build
 ```
 
 Build specific service:
 ```bash
-docker-compose build frontend
-docker-compose build backend
+podman-compose build frontend
+podman-compose build backend
 ```
 
 ## Data Persistence
 
-MongoDB data is persisted using a named Docker volume (`mongodb_data`). The data persists even when containers are stopped or removed.
+MongoDB data is persisted using a named Podman volume (`mongodb_data`). The data persists even when containers are stopped or removed.
 
 To remove all data:
 ```bash
-docker-compose down -v
+podman-compose down -v
 ```
 
 ## Troubleshooting
@@ -227,7 +227,7 @@ In production, the frontend is served by Nginx which proxies `/api` requests to 
 
 In development, ensure `VITE_API_URL` environment variable points to the correct backend URL.
 
-## Docker Features Demonstrated
+## Container Features Demonstrated
 
 - ✅ Multi-stage builds for smaller production images
 - ✅ Separate dev and production configurations
