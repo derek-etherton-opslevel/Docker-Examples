@@ -1,5 +1,9 @@
 version: '3.8'
 
+# This compose file is compatible with both Docker Compose and Podman Compose
+# Usage with Podman: podman-compose up -d
+# Or: podman compose up -d
+
 services:
   mongodb:
     image: mongo:7
