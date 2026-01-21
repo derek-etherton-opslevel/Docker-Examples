@@ -1,5 +1,11 @@
 # Java Chat Application
 
+```
+     /\_/\
+    ( o.o )
+     > ^ <
+```
+
 A real-time chat application built with Spring Boot, featuring WebSocket support, PostgreSQL persistence, and RabbitMQ message queue integration.
 
 ## Features
