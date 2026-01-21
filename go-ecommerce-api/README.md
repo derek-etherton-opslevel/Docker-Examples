@@ -1,5 +1,13 @@
 # Go E-commerce API
 
+```
+     /\_/\
+    ( o.o )
+     > ^ <
+    /|   |\
+   (_|   |_)
+```
+
 A simple e-commerce REST API built with Go, featuring PostgreSQL, Redis caching, and Elasticsearch search capabilities.
 
 ## Features
