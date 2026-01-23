@@ -1,6 +1,6 @@
 # Calendar App
 
-A full-stack calendar application built with React (Vite) frontend, Express.js backend, and MongoDB database. This project demonstrates Docker containerization with multi-stage builds, separate frontend/backend containers, and service orchestration.
+A full-stack calendar application built with Vue 3 (Vite) frontend, Express.js backend, and MongoDB database. This project demonstrates Docker containerization with multi-stage builds, separate frontend/backend containers, and service orchestration.
 
 ## Features
 
@@ -15,7 +15,7 @@ A full-stack calendar application built with React (Vite) frontend, Express.js b
 ## Tech Stack
 
 ### Frontend
-- **React 18** - UI library
+- **Vue 3** - Progressive JavaScript framework
 - **Vite** - Build tool and dev server
 - **Axios** - HTTP client
 - **Nginx** - Production web server
@@ -81,15 +81,15 @@ javascript-calendar-app/
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Calendar.jsx
+│   │   │   ├── Calendar.vue
 │   │   │   ├── Calendar.css
-│   │   │   ├── EventForm.jsx
+│   │   │   ├── EventForm.vue
 │   │   │   └── EventForm.css
 │   │   ├── services/
 │   │   │   └── api.js
-│   │   ├── App.jsx
+│   │   ├── App.vue
 │   │   ├── App.css
-│   │   ├── main.jsx
+│   │   ├── main.js
 │   │   └── index.css
 │   ├── Dockerfile (production)
 │   ├── Dockerfile.dev (development)
@@ -117,7 +117,7 @@ javascript-calendar-app/
 ### Multi-Stage Builds
 
 **Frontend:**
-- **Stage 1 (build)**: Installs dependencies and builds the React app with Vite
+- **Stage 1 (build)**: Installs dependencies and builds the Vue 3 app with Vite
 - **Stage 2 (production)**: Uses Nginx to serve the built static files
 
 **Backend:**
@@ -126,7 +126,7 @@ javascript-calendar-app/
 
 ### Services
 
-1. **frontend**: React application served by Nginx (production) or Vite dev server (development)
+1. **frontend**: Vue 3 application served by Nginx (production) or Vite dev server (development)
 2. **backend**: Express.js API server
 3. **mongodb**: MongoDB database with persistent volume
 
