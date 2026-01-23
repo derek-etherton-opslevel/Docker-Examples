@@ -1,5 +1,13 @@
 # Ruby Blog App
 
+```
+     /\_/\
+    ( o.o )
+     > ^ <
+    /|   |\
+   (_|   |_)
+```
+
 A full-featured blog platform built with Ruby on Rails 7, containerized with Docker. Features include user authentication, post management, comments, admin panel, and background job processing with Sidekiq.
 
 ## Features
