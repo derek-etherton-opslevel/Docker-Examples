@@ -1,5 +1,13 @@
 # Calendar App
 
+```
+     /\_/\
+    ( o.o )
+     > ^ <
+   /|     |\
+  (_|     |_)
+```
+
 A full-stack calendar application built with React (Vite) frontend, Express.js backend, and MongoDB database. This project demonstrates Docker containerization with multi-stage builds, separate frontend/backend containers, and service orchestration.
 
 ## Features
