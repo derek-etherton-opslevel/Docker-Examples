@@ -272,3 +272,18 @@ This is a sample application for demonstration purposes.
 ## Contributing
 
 This is a sample repository. Feel free to use it as a starting point for your own projects!
+
+## The Official Ruby Blog Frog
+
+```
+       _~_
+      ( o )
+     / / \ \
+    ( (   ) )
+   ============
+    @  o . o
+   (  (*)_(*) )
+    \ \___/ /
+     /_____\
+    /       \
+```
