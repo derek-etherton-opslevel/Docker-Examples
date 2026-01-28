@@ -1,8 +1,38 @@
-# Java Chat Application
+# 💬 Java Chat Application
+
+[![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Docker](https://img.shields.io/badge/Docker-Compose-blue.svg)](https://www.docker.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
+[![RabbitMQ](https://img.shields.io/badge/RabbitMQ-3.12-orange.svg)](https://www.rabbitmq.com/)
 
 A real-time chat application built with Spring Boot, featuring WebSocket support, PostgreSQL persistence, and RabbitMQ message queue integration.
 
-## Features
+---
+
+## 📋 Table of Contents
+
+- [✨ Features](#-features)
+- [🏗️ Architecture](#️-architecture)
+- [📦 Prerequisites](#-prerequisites)
+- [🚀 Quick Start with Docker](#-quick-start-with-docker)
+- [🌐 Services](#-services)
+- [📡 API Endpoints](#-api-endpoints)
+  - [REST API](#rest-api)
+  - [WebSocket](#websocket)
+- [🛠️ Development](#️-development)
+- [🐋 Docker Features](#-docker-features)
+- [⚙️ Environment Variables](#️-environment-variables)
+- [🧪 Testing the Application](#-testing-the-application)
+- [🛑 Stopping Services](#-stopping-services)
+- [❓ Troubleshooting](#-troubleshooting)
+- [📁 Project Structure](#-project-structure)
+- [📄 License](#-license)
+
+---
+
+## ✨ Features
 
 - **REST API** for sending and retrieving chat messages
 - **WebSocket** support for real-time bidirectional communication
@@ -11,7 +41,9 @@ A real-time chat application built with Spring Boot, featuring WebSocket support
 - **Multi-stage Docker build** for optimized container images
 - **Docker Compose** setup for easy development and deployment
 
-## Architecture
+---
+
+## 🏗️ Architecture
 
 The application follows a microservices architecture pattern:
 
@@ -19,13 +51,17 @@ The application follows a microservices architecture pattern:
 - **PostgreSQL**: Relational database for storing chat messages
 - **RabbitMQ**: Message broker for async message processing and distribution
 
-## Prerequisites
+---
+
+## 📦 Prerequisites
 
 - Docker and Docker Compose installed
 - Java 17+ (for local development without Docker)
 - Maven 3.6+ (for local development)
 
-## Quick Start with Docker
+---
+
+## 🚀 Quick Start with Docker
 
 1. **Clone the repository** (if not already done):
    ```bash
@@ -53,7 +89,9 @@ The application follows a microservices architecture pattern:
    docker-compose logs -f api
    ```
 
-## Services
+---
+
+## 🌐 Services
 
 Once started, the following services will be available:
 
@@ -61,7 +99,9 @@ Once started, the following services will be available:
 - **RabbitMQ Management UI**: http://localhost:15672 (guest/guest)
 - **PostgreSQL**: localhost:5432
 
-## API Endpoints
+---
+
+## 📡 API Endpoints
 
 ### REST API
 
@@ -115,7 +155,9 @@ stompClient.connect({}, function(frame) {
 });
 ```
 
-## Development
+---
+
+## 🛠️ Development
 
 ### Local Development (without Docker)
 
@@ -150,7 +192,9 @@ docker-compose up -d rabbitmq
 docker-compose up -d api
 ```
 
-## Docker Features
+---
+
+## 🐋 Docker Features
 
 - **Multi-stage build**: Separates build and runtime stages for smaller images
 - **JRE-only runtime**: Uses JRE instead of full JDK for reduced image size
@@ -159,7 +203,9 @@ docker-compose up -d api
 - **Named volumes**: Data persistence for PostgreSQL and RabbitMQ
 - **Network isolation**: Services communicate through dedicated Docker network
 
-## Environment Variables
+---
+
+## ⚙️ Environment Variables
 
 See `.env.example` for all available environment variables:
 
@@ -167,7 +213,9 @@ See `.env.example` for all available environment variables:
 - `RABBITMQ_USER`, `RABBITMQ_PASSWORD`, `RABBITMQ_PORT` - RabbitMQ configuration
 - `API_PORT` - API service port
 
-## Testing the Application
+---
+
+## 🧪 Testing the Application
 
 ### Using cURL
 
@@ -192,7 +240,9 @@ curl http://localhost:8080/api/messages/room/general
 
 You can use any WebSocket client or browser console to test WebSocket functionality. The application uses STOMP over WebSocket.
 
-## Stopping Services
+---
+
+## 🛑 Stopping Services
 
 ```bash
 docker-compose down
@@ -204,7 +254,9 @@ To also remove volumes (⚠️ this will delete all data):
 docker-compose down -v
 ```
 
-## Troubleshooting
+---
+
+## ❓ Troubleshooting
 
 ### Port Already in Use
 
@@ -226,9 +278,11 @@ docker-compose ps rabbitmq
 
 Access RabbitMQ Management UI at http://localhost:15672 to monitor queues and connections.
 
-## Project Structure
+---
 
-```
+## 📁 Project Structure
+
+```plaintext
 java-chat-app/
 ├── src/
 │   └── main/
@@ -261,6 +315,8 @@ java-chat-app/
 └── README.md
 ```
 
-## License
+---
+
+## 📄 License
 
 This is a sample application for demonstration purposes.
