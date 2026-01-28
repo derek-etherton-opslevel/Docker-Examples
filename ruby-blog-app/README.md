@@ -1,34 +1,75 @@
-# Ruby Blog App
+<div align="center">
+
+# 📝 Ruby Blog App
 
 A full-featured blog platform built with Ruby on Rails 7, containerized with Docker. Features include user authentication, post management, comments, admin panel, and background job processing with Sidekiq.
 
-## Features
+[![Ruby Version](https://img.shields.io/badge/ruby-3.2.0-red.svg)](https://www.ruby-lang.org/)
+[![Rails Version](https://img.shields.io/badge/rails-7.0-red.svg)](https://rubyonrails.org/)
+[![Docker](https://img.shields.io/badge/docker-enabled-blue.svg)](https://www.docker.com/)
+[![PostgreSQL](https://img.shields.io/badge/postgresql-15-blue.svg)](https://www.postgresql.org/)
+[![Redis](https://img.shields.io/badge/redis-7-red.svg)](https://redis.io/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-- **User Authentication**: Secure login system with password hashing
-- **Blog Posts**: Create, edit, and delete blog posts with publishing controls
-- **Comments**: Users can comment on posts
-- **Admin Panel**: Administrative dashboard for managing posts and users
-- **Background Jobs**: Sidekiq integration for async task processing
-- **Reverse Proxy**: Nginx for serving static assets and proxying requests
-- **Multi-Service Architecture**: PostgreSQL, Redis, Rails, Sidekiq, and Nginx
+</div>
 
-## Architecture
+---
+
+## 📑 Table of Contents
+
+- [✨ Features](#-features)
+- [🏗️ Architecture](#️-architecture)
+- [📋 Prerequisites](#-prerequisites)
+- [🚀 Quick Start](#-quick-start)
+- [🌐 Accessing the Application](#-accessing-the-application)
+- [🔐 Default Credentials](#-default-credentials)
+- [🐳 Docker Services](#-docker-services)
+- [💻 Development](#-development)
+- [⚙️ Environment Variables](#️-environment-variables)
+- [📂 Project Structure](#-project-structure)
+- [🎯 Docker Features](#-docker-features)
+- [🔧 Troubleshooting](#-troubleshooting)
+- [🚢 Production Considerations](#-production-considerations)
+- [📄 License](#-license)
+- [🤝 Contributing](#-contributing)
+
+---
+
+## ✨ Features
+
+- 🔐 **User Authentication**: Secure login system with password hashing
+- 📄 **Blog Posts**: Create, edit, and delete blog posts with publishing controls
+- 💬 **Comments**: Users can comment on posts
+- 👥 **Admin Panel**: Administrative dashboard for managing posts and users
+- ⚡ **Background Jobs**: Sidekiq integration for async task processing
+- 🔄 **Reverse Proxy**: Nginx for serving static assets and proxying requests
+- 🏗️ **Multi-Service Architecture**: PostgreSQL, Redis, Rails, Sidekiq, and Nginx
+
+---
+
+## 🏗️ Architecture
 
 The application uses Docker Compose to orchestrate multiple services:
 
-- **Rails**: Main application server (Puma)
-- **PostgreSQL**: Database for storing posts, users, and comments
-- **Redis**: Cache and Sidekiq job queue
-- **Sidekiq**: Background job processor
-- **Nginx**: Reverse proxy and static asset server
+| Service | Description | Port |
+|---------|-------------|------|
+| 🚂 **Rails** | Main application server (Puma) | 3000 |
+| 🐘 **PostgreSQL** | Database for storing posts, users, and comments | 5432 |
+| 🔴 **Redis** | Cache and Sidekiq job queue | 6379 |
+| ⚙️ **Sidekiq** | Background job processor | - |
+| 🌐 **Nginx** | Reverse proxy and static asset server | 80 |
 
-## Prerequisites
+---
 
-- Docker and Docker Compose installed
-- At least 2GB of available RAM
-- Ports 80, 3000, 5432, and 6379 available
+## 📋 Prerequisites
 
-## Quick Start
+- 🐳 Docker and Docker Compose installed
+- 💾 At least 2GB of available RAM
+- 🔌 Ports 80, 3000, 5432, and 6379 available
+
+---
+
+## 🚀 Quick Start
 
 ### Option 1: Using the Setup Script (Recommended)
 
@@ -70,25 +111,32 @@ The setup script will:
    docker-compose exec rails bundle exec rails db:create db:migrate db:seed
    ```
 
-## Accessing the Application
+---
 
-- **Web Interface**: http://localhost
-- **Rails Server** (direct): http://localhost:3000
-- **Admin Panel**: http://localhost/admin (requires admin login)
+## 🌐 Accessing the Application
 
-## Default Credentials
+| Interface | URL | Description |
+|-----------|-----|-------------|
+| 🌐 **Web Interface** | http://localhost | Main application |
+| 🚂 **Rails Server** | http://localhost:3000 | Direct Rails access |
+| 👥 **Admin Panel** | http://localhost/admin | Admin dashboard |
+
+---
+
+## 🔐 Default Credentials
 
 After running the seed script, you can log in with:
 
-- **Admin User:**
-  - Email: `admin@blog.com`
-  - Password: `admin123`
+| Role | Email | Password |
+|------|-------|----------|
+| 👤 **Admin User** | `admin@blog.com` | `admin123` |
+| 👤 **Regular User** | `user@blog.com` | `password123` |
 
-- **Regular User:**
-  - Email: `user@blog.com`
-  - Password: `password123`
+> ⚠️ **Security Note**: Change these credentials before deploying to production!
 
-## Docker Services
+---
+
+## 🐳 Docker Services
 
 ### View Logs
 
@@ -121,7 +169,9 @@ docker-compose build --no-cache
 docker-compose up -d
 ```
 
-## Development
+---
+
+## 💻 Development
 
 ### Running Rails Console
 
@@ -147,20 +197,26 @@ docker-compose exec rails bundle exec rails generate migration MigrationName
 docker-compose exec postgres psql -U postgres -d blog_development
 ```
 
-## Environment Variables
+---
+
+## ⚙️ Environment Variables
 
 Key environment variables (configured in `.env`):
 
-- `POSTGRES_DB`: Database name
-- `POSTGRES_USER`: PostgreSQL username
-- `POSTGRES_PASSWORD`: PostgreSQL password
-- `RAILS_ENV`: Rails environment (development/production)
-- `SECRET_KEY_BASE`: Rails secret key for encryption
-- `REDIS_URL`: Redis connection URL
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `POSTGRES_DB` | Database name | `blog_development` |
+| `POSTGRES_USER` | PostgreSQL username | `postgres` |
+| `POSTGRES_PASSWORD` | PostgreSQL password | `postgres` |
+| `RAILS_ENV` | Rails environment | `production` |
+| `SECRET_KEY_BASE` | Rails secret key for encryption | *required* |
+| `REDIS_URL` | Redis connection URL | `redis://redis:6379/0` |
 
-## Project Structure
+---
 
-```
+## 📂 Project Structure
+
+```plaintext
 ruby-blog-app/
 ├── app/
 │   ├── controllers/      # Application controllers
@@ -182,7 +238,9 @@ ruby-blog-app/
 └── README.md            # This file
 ```
 
-## Docker Features
+---
+
+## 🎯 Docker Features
 
 ### Multi-Stage Build
 
@@ -205,7 +263,9 @@ All services include health checks to ensure proper startup ordering and service
 
 Nginx serves static assets directly and proxies dynamic requests to Rails, improving performance and reducing load on the application server.
 
-## Troubleshooting
+---
+
+## 🔧 Troubleshooting
 
 ### Database Connection Issues
 
@@ -253,22 +313,43 @@ If assets fail to precompile:
    docker-compose exec redis redis-cli ping
    ```
 
-## Production Considerations
+---
+
+## 🚢 Production Considerations
 
 For production deployment:
 
-1. **Change default passwords** in `.env`
-2. **Use strong SECRET_KEY_BASE** (generate with `rails secret`)
-3. **Enable SSL/TLS** in Nginx configuration
-4. **Set up proper backup** for PostgreSQL volumes
-5. **Configure log rotation**
-6. **Use environment-specific configurations**
-7. **Set resource limits** in `docker-compose.yml`
+- ✅ **Change default passwords** in `.env`
+- ✅ **Use strong SECRET_KEY_BASE** (generate with `rails secret`)
+- ✅ **Enable SSL/TLS** in Nginx configuration
+- ✅ **Set up proper backup** for PostgreSQL volumes
+- ✅ **Configure log rotation**
+- ✅ **Use environment-specific configurations**
+- ✅ **Set resource limits** in `docker-compose.yml`
 
-## License
+---
+
+## 📄 License
 
 This is a sample application for demonstration purposes.
 
-## Contributing
+---
+
+## 🤝 Contributing
 
 This is a sample repository. Feel free to use it as a starting point for your own projects!
+
+---
+
+<div align="center">
+
+**Made with ❤️ using Ruby on Rails and Docker**
+
+[![Ruby](https://img.shields.io/badge/Ruby-CC342D?style=for-the-badge&logo=ruby&logoColor=white)](https://www.ruby-lang.org/)
+[![Rails](https://img.shields.io/badge/Rails-CC0000?style=for-the-badge&logo=ruby-on-rails&logoColor=white)](https://rubyonrails.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
+[![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)](https://nginx.org/)
+
+</div>
