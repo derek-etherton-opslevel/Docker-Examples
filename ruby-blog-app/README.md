@@ -1,8 +1,47 @@
-# Ruby Blog App
+<div align="center">
 
-A full-featured blog platform built with Ruby on Rails 7, containerized with Docker. Features include user authentication, post management, comments, admin panel, and background job processing with Sidekiq.
+![Ruby Blog App Banner](https://via.placeholder.com/1200x300/FF6B6B/FFFFFF?text=Ruby+Blog+App+-+Dockerized+Rails+7+Application)
 
-## Features
+# 📝 Ruby Blog App
+
+![Ruby](https://img.shields.io/badge/Ruby-3.2.0-red?style=for-the-badge&logo=ruby&logoColor=white)
+![Rails](https://img.shields.io/badge/Rails-7.0-red?style=for-the-badge&logo=rubyonrails&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Enabled-blue?style=for-the-badge&logo=docker&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?style=for-the-badge&logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-7-red?style=for-the-badge&logo=redis&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
+**A full-featured blog platform built with Ruby on Rails 7, containerized with Docker**
+
+*Features include user authentication, post management, comments, admin panel, and background job processing with Sidekiq*
+
+[Getting Started](#-quick-start) • [Features](#-features) • [Documentation](#-table-of-contents) • [Contributing](#-contributing)
+
+</div>
+
+---
+
+## 📑 Table of Contents
+
+- [✨ Features](#-features)
+- [🏗️ Architecture](#️-architecture)
+- [📋 Prerequisites](#-prerequisites)
+- [🚀 Quick Start](#-quick-start)
+- [🌐 Accessing the Application](#-accessing-the-application)
+- [🔑 Default Credentials](#-default-credentials)
+- [🐳 Docker Services](#-docker-services)
+- [💻 Development](#-development)
+- [⚙️ Environment Variables](#️-environment-variables)
+- [📂 Project Structure](#-project-structure)
+- [🎯 Docker Features](#-docker-features)
+- [🔧 Troubleshooting](#-troubleshooting)
+- [🚀 Production Considerations](#-production-considerations)
+- [📄 License](#-license)
+- [🤝 Contributing](#-contributing)
+
+---
+
+## ✨ Features
 
 - **User Authentication**: Secure login system with password hashing
 - **Blog Posts**: Create, edit, and delete blog posts with publishing controls
@@ -12,7 +51,9 @@ A full-featured blog platform built with Ruby on Rails 7, containerized with Doc
 - **Reverse Proxy**: Nginx for serving static assets and proxying requests
 - **Multi-Service Architecture**: PostgreSQL, Redis, Rails, Sidekiq, and Nginx
 
-## Architecture
+---
+
+## 🏗️ Architecture
 
 The application uses Docker Compose to orchestrate multiple services:
 
@@ -22,13 +63,51 @@ The application uses Docker Compose to orchestrate multiple services:
 - **Sidekiq**: Background job processor
 - **Nginx**: Reverse proxy and static asset server
 
-## Prerequisites
+<div align="center">
+
+```
+┌─────────────┐
+│   Nginx     │ ← Port 80
+│ (Port 80)   │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│   Rails     │ ← Port 3000
+│   (Puma)    │
+└──┬──────┬───┘
+   │      │
+   │      └──────────┐
+   │                 │
+   ▼                 ▼
+┌──────────┐   ┌──────────┐
+│PostgreSQL│   │  Redis   │
+│          │   │          │
+└──────────┘   └────┬─────┘
+                    │
+                    ▼
+              ┌──────────┐
+              │ Sidekiq  │
+              │Background│
+              │  Jobs    │
+              └──────────┘
+```
+
+*Multi-service architecture with reverse proxy, application server, database, cache, and background job processor*
+
+</div>
+
+---
+
+## 📋 Prerequisites
 
 - Docker and Docker Compose installed
 - At least 2GB of available RAM
 - Ports 80, 3000, 5432, and 6379 available
 
-## Quick Start
+---
+
+## 🚀 Quick Start
 
 ### Option 1: Using the Setup Script (Recommended)
 
@@ -70,13 +149,17 @@ The setup script will:
    docker-compose exec rails bundle exec rails db:create db:migrate db:seed
    ```
 
-## Accessing the Application
+---
+
+## 🌐 Accessing the Application
 
 - **Web Interface**: http://localhost
 - **Rails Server** (direct): http://localhost:3000
 - **Admin Panel**: http://localhost/admin (requires admin login)
 
-## Default Credentials
+---
+
+## 🔑 Default Credentials
 
 After running the seed script, you can log in with:
 
@@ -88,7 +171,9 @@ After running the seed script, you can log in with:
   - Email: `user@blog.com`
   - Password: `password123`
 
-## Docker Services
+---
+
+## 🐳 Docker Services
 
 ### View Logs
 
@@ -121,7 +206,9 @@ docker-compose build --no-cache
 docker-compose up -d
 ```
 
-## Development
+---
+
+## 💻 Development
 
 ### Running Rails Console
 
@@ -147,7 +234,9 @@ docker-compose exec rails bundle exec rails generate migration MigrationName
 docker-compose exec postgres psql -U postgres -d blog_development
 ```
 
-## Environment Variables
+---
+
+## ⚙️ Environment Variables
 
 Key environment variables (configured in `.env`):
 
@@ -158,7 +247,9 @@ Key environment variables (configured in `.env`):
 - `SECRET_KEY_BASE`: Rails secret key for encryption
 - `REDIS_URL`: Redis connection URL
 
-## Project Structure
+---
+
+## 📂 Project Structure
 
 ```
 ruby-blog-app/
@@ -182,7 +273,9 @@ ruby-blog-app/
 └── README.md            # This file
 ```
 
-## Docker Features
+---
+
+## 🎯 Docker Features
 
 ### Multi-Stage Build
 
@@ -205,7 +298,9 @@ All services include health checks to ensure proper startup ordering and service
 
 Nginx serves static assets directly and proxies dynamic requests to Rails, improving performance and reducing load on the application server.
 
-## Troubleshooting
+---
+
+## 🔧 Troubleshooting
 
 ### Database Connection Issues
 
@@ -253,7 +348,9 @@ If assets fail to precompile:
    docker-compose exec redis redis-cli ping
    ```
 
-## Production Considerations
+---
+
+## 🚀 Production Considerations
 
 For production deployment:
 
@@ -265,10 +362,32 @@ For production deployment:
 6. **Use environment-specific configurations**
 7. **Set resource limits** in `docker-compose.yml`
 
-## License
+---
+
+## 📄 License
 
 This is a sample application for demonstration purposes.
 
-## Contributing
+---
+
+## 🤝 Contributing
 
 This is a sample repository. Feel free to use it as a starting point for your own projects!
+
+We welcome contributions! Here's how you can help:
+
+1. 🍴 Fork the repository
+2. 🔨 Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. 💾 Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. 📤 Push to the branch (`git push origin feature/amazing-feature`)
+5. 🎉 Open a Pull Request
+
+---
+
+<div align="center">
+
+Made with ❤️ by developers, for developers
+
+**[⬆ Back to Top](#-ruby-blog-app)**
+
+</div>
