@@ -1,8 +1,49 @@
-# Calendar App
+<div align="center">
+
+# 📅 Calendar App
+
+### A Modern Full-Stack Calendar Application
+
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![React](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Latest-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge)](package.json)
 
 A full-stack calendar application built with React (Vite) frontend, Express.js backend, and MongoDB database. This project demonstrates Docker containerization with multi-stage builds, separate frontend/backend containers, and service orchestration.
 
-## Features
+[Features](#-features) •
+[Quick Start](#-quick-start) •
+[Documentation](#-project-structure) •
+[API](#-api-endpoints) •
+[Contributing](#-development)
+
+</div>
+
+---
+
+## 📑 Table of Contents
+
+- [✨ Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📋 Prerequisites](#-prerequisites)
+- [🚀 Quick Start](#-quick-start)
+  - [Production Mode](#production-mode)
+  - [Development Mode](#development-mode)
+- [📁 Project Structure](#-project-structure)
+- [🏗️ Docker Architecture](#️-docker-architecture)
+- [🌐 API Endpoints](#-api-endpoints)
+- [⚙️ Environment Variables](#️-environment-variables)
+- [💻 Development](#-development)
+- [💾 Data Persistence](#-data-persistence)
+- [🔧 Troubleshooting](#-troubleshooting)
+- [📚 Docker Features Demonstrated](#-docker-features-demonstrated)
+- [📄 License](#-license)
+
+---
+
+## ✨ Features
 
 - 📅 Interactive calendar view with month navigation
 - ➕ Create, edit, and delete events
@@ -12,7 +53,9 @@ A full-stack calendar application built with React (Vite) frontend, Express.js b
 - 🚀 Multi-stage Docker builds for optimization
 - 🔄 Hot reload in development mode
 
-## Tech Stack
+---
+
+## 🛠️ Tech Stack
 
 ### Frontend
 - **React 18** - UI library
@@ -32,12 +75,16 @@ A full-stack calendar application built with React (Vite) frontend, Express.js b
 - Network isolation between services
 - Volume persistence for database
 
-## Prerequisites
+---
+
+## 📋 Prerequisites
 
 - Docker (version 20.10 or later)
 - Docker Compose (version 2.0 or later)
 
-## Quick Start
+---
+
+## 🚀 Quick Start
 
 ### Production Mode
 
@@ -74,7 +121,9 @@ For development with hot reload:
    - Frontend (Vite dev server): http://localhost:5173
    - Backend API: http://localhost:3001
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 javascript-calendar-app/
@@ -112,7 +161,9 @@ javascript-calendar-app/
 └── README.md
 ```
 
-## Docker Architecture
+---
+
+## 🏗️ Docker Architecture
 
 ### Multi-Stage Builds
 
@@ -137,7 +188,9 @@ All services communicate through a custom bridge network (`calendar-network`), p
 - Network isolation from other Docker networks
 - Internal communication without exposing ports unnecessarily
 
-## API Endpoints
+---
+
+## 🌐 API Endpoints
 
 ### Events
 
@@ -151,7 +204,9 @@ All services communicate through a custom bridge network (`calendar-network`), p
 
 - `GET /health` - Backend health check endpoint
 
-## Environment Variables
+---
+
+## ⚙️ Environment Variables
 
 ### Backend
 
@@ -163,7 +218,9 @@ All services communicate through a custom bridge network (`calendar-network`), p
 
 - `VITE_API_URL` - Backend API URL (default: http://localhost:3001/api)
 
-## Development
+---
+
+## 💻 Development
 
 ### Running Locally (without Docker)
 
@@ -196,7 +253,9 @@ docker-compose build frontend
 docker-compose build backend
 ```
 
-## Data Persistence
+---
+
+## 💾 Data Persistence
 
 MongoDB data is persisted using a named Docker volume (`mongodb_data`). The data persists even when containers are stopped or removed.
 
@@ -205,7 +264,9 @@ To remove all data:
 docker-compose down -v
 ```
 
-## Troubleshooting
+---
+
+## 🔧 Troubleshooting
 
 ### Port Already in Use
 
@@ -227,7 +288,9 @@ In production, the frontend is served by Nginx which proxies `/api` requests to 
 
 In development, ensure `VITE_API_URL` environment variable points to the correct backend URL.
 
-## Docker Features Demonstrated
+---
+
+## 📚 Docker Features Demonstrated
 
 - ✅ Multi-stage builds for smaller production images
 - ✅ Separate dev and production configurations
@@ -238,6 +301,18 @@ In development, ensure `VITE_API_URL` environment variable points to the correct
 - ✅ Nginx reverse proxy for static assets
 - ✅ Hot reload in development mode
 
-## License
+---
 
-MIT
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+**Made with ❤️ using Docker, React, and Node.js**
+
+⭐ Star this repository if you find it helpful!
+
+</div>
