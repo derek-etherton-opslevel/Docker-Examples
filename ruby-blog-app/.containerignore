@@ -1,0 +1,16 @@
+.git
+.gitignore
+README.md
+.env
+.env.local
+.env.*.local
+log/*
+tmp/*
+node_modules
+/public/assets
+/public/packs
+/public/packs-test
+.DS_Store
+*.log
+coverage/
+.byebug_history
