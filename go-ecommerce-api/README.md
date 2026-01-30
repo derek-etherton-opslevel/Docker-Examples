@@ -8,13 +8,13 @@ A simple e-commerce REST API built with Go, featuring PostgreSQL, Redis caching,
 - PostgreSQL database for data persistence
 - Redis for caching layer
 - Elasticsearch for product search
-- Multi-stage Docker builds for optimized images
+- Multi-stage Podman builds for optimized images
 - Health checks for all services
-- Docker Compose orchestration
+- Podman Compose orchestration
 
 ## Prerequisites
 
-- Docker and Docker Compose installed
+- Podman and Podman Compose installed
 - (Optional) Go 1.21+ for local development
 
 ## Quick Start
@@ -35,12 +35,12 @@ cp .env.example .env
 
 2. Build and start services:
 ```bash
-docker-compose up -d
+podman-compose -f podman-compose.yml up -d
 ```
 
 3. Check service status:
 ```bash
-docker-compose ps
+podman-compose -f podman-compose.yml ps
 ```
 
 ## API Endpoints
@@ -94,15 +94,15 @@ go mod download
 go run main.go
 ```
 
-### Docker Commands
+### Podman Commands
 
-- Start services: `docker-compose up -d`
-- Stop services: `docker-compose down`
-- View logs: `docker-compose logs -f`
-- Rebuild: `docker-compose build --no-cache`
-- Access database: `docker-compose exec postgres psql -U ecommerce -d ecommerce_db`
+- Start services: `podman-compose -f podman-compose.yml up -d`
+- Stop services: `podman-compose -f podman-compose.yml down`
+- View logs: `podman-compose -f podman-compose.yml logs -f`
+- Rebuild: `podman-compose -f podman-compose.yml build --no-cache`
+- Access database: `podman-compose -f podman-compose.yml exec postgres psql -U ecommerce -d ecommerce_db`
 
-## Docker Features
+## Podman Features
 
 - **Multi-stage builds**: Optimized image size using Alpine Linux
 - **Health checks**: All services include health check configurations
