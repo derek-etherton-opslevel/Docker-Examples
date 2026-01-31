@@ -2,23 +2,23 @@
 
 set -e
 
-echo "🚀 Setting up Ruby Blog App with Docker..."
+echo "🚀 Setting up Ruby Blog App with Podman..."
 
-# Check if Docker is installed
-if ! command -v docker &> /dev/null; then
-    echo "❌ Docker is not installed."
-    echo "Please install Docker from https://docs.docker.com/get-docker/"
+# Check if Podman is installed
+if ! command -v podman &> /dev/null; then
+    echo "❌ Podman is not installed."
+    echo "Please install Podman from https://podman.io/getting-started/installation"
     exit 1
 fi
 
-# Check if Docker Compose is installed
-if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
-    echo "❌ Docker Compose is not installed."
-    echo "Please install Docker Compose from https://docs.docker.com/compose/install/"
+# Check if Podman Compose is installed
+if ! command -v podman-compose &> /dev/null && ! podman compose version &> /dev/null; then
+    echo "❌ Podman Compose is not installed."
+    echo "Please install Podman Compose from https://github.com/containers/podman-compose"
     exit 1
 fi
 
-echo "✅ Docker is installed"
+echo "✅ Podman is installed"
 
 # Check if .env file exists
 if [ ! -f .env ]; then
@@ -56,11 +56,11 @@ if ! grep -q "SECRET_KEY_BASE=" .env || grep -q "SECRET_KEY_BASE=your_secret_key
 fi
 
 # Build and start containers
-echo "🏗️  Building Docker images..."
-docker-compose build
+echo "🏗️  Building container images..."
+podman-compose build
 
 echo "🚀 Starting containers..."
-docker-compose up -d
+podman-compose up -d
 
 # Wait for database to be ready
 echo "⏳ Waiting for database to be ready..."
@@ -68,10 +68,10 @@ sleep 5
 
 # Run migrations and seed
 echo "📊 Running database migrations..."
-docker-compose exec -T rails bundle exec rails db:create db:migrate || true
+podman-compose exec -T rails bundle exec rails db:create db:migrate || true
 
 echo "🌱 Seeding database..."
-docker-compose exec -T rails bundle exec rails db:seed || true
+podman-compose exec -T rails bundle exec rails db:seed || true
 
 echo ""
 echo "✅ Setup complete!"
@@ -84,8 +84,8 @@ echo "🌐 Access the application at:"
 echo "   http://localhost"
 echo ""
 echo "📊 View logs with:"
-echo "   docker-compose logs -f"
+echo "   podman-compose logs -f"
 echo ""
 echo "🛑 Stop the application with:"
-echo "   docker-compose down"
+echo "   podman-compose down"
 echo ""
