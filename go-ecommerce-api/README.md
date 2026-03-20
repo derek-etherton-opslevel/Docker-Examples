@@ -8,13 +8,13 @@ A simple e-commerce REST API built with Go, featuring PostgreSQL, Redis caching,
 - PostgreSQL database for data persistence
 - Redis for caching layer
 - Elasticsearch for product search
-- Multi-stage Docker builds for optimized images
+- Multi-stage container builds for optimized images
 - Health checks for all services
-- Docker Compose orchestration
+- Podman Compose orchestration
 
 ## Prerequisites
 
-- Docker and Docker Compose installed
+- Podman and Podman Compose installed
 - (Optional) Go 1.21+ for local development
 
 ## Quick Start
@@ -35,12 +35,12 @@ cp .env.example .env
 
 2. Build and start services:
 ```bash
-docker-compose up -d
+podman-compose up -d
 ```
 
 3. Check service status:
 ```bash
-docker-compose ps
+podman-compose ps
 ```
 
 ## API Endpoints
@@ -94,15 +94,15 @@ go mod download
 go run main.go
 ```
 
-### Docker Commands
+### Podman Commands
 
-- Start services: `docker-compose up -d`
-- Stop services: `docker-compose down`
-- View logs: `docker-compose logs -f`
-- Rebuild: `docker-compose build --no-cache`
-- Access database: `docker-compose exec postgres psql -U ecommerce -d ecommerce_db`
+- Start services: `podman-compose up -d`
+- Stop services: `podman-compose down`
+- View logs: `podman-compose logs -f`
+- Rebuild: `podman-compose build --no-cache`
+- Access database: `podman-compose exec postgres psql -U ecommerce -d ecommerce_db`
 
-## Docker Features
+## Container Features
 
 - **Multi-stage builds**: Optimized image size using Alpine Linux
 - **Health checks**: All services include health check configurations
