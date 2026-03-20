@@ -8,8 +8,8 @@ A real-time chat application built with Spring Boot, featuring WebSocket support
 - **WebSocket** support for real-time bidirectional communication
 - **PostgreSQL** database for message persistence
 - **RabbitMQ** message broker for asynchronous message processing
-- **Multi-stage Docker build** for optimized container images
-- **Docker Compose** setup for easy development and deployment
+- **Multi-stage container build** for optimized container images
+- **Podman Compose** setup for easy development and deployment
 
 ## Architecture
 
@@ -21,11 +21,11 @@ The application follows a microservices architecture pattern:
 
 ## Prerequisites
 
-- Docker and Docker Compose installed
-- Java 17+ (for local development without Docker)
+- Podman and Podman Compose installed (or Docker Compose compatibility)
+- Java 17+ (for local development without containers)
 - Maven 3.6+ (for local development)
 
-## Quick Start with Docker
+## Quick Start with Podman
 
 1. **Clone the repository** (if not already done):
    ```bash
@@ -40,17 +40,22 @@ The application follows a microservices architecture pattern:
 
 3. **Start all services**:
    ```bash
-   docker-compose up -d
+   podman-compose up -d
+   ```
+
+   Or using Docker Compose compatibility:
+   ```bash
+   podman compose up -d
    ```
 
 4. **Check service status**:
    ```bash
-   docker-compose ps
+   podman-compose ps
    ```
 
 5. **View logs**:
    ```bash
-   docker-compose logs -f api
+   podman-compose logs -f api
    ```
 
 ## Services
@@ -117,11 +122,11 @@ stompClient.connect({}, function(frame) {
 
 ## Development
 
-### Local Development (without Docker)
+### Local Development (without Containers)
 
-1. **Start PostgreSQL and RabbitMQ** (using Docker Compose):
+1. **Start PostgreSQL and RabbitMQ** (using Podman Compose):
    ```bash
-   docker-compose up -d postgres rabbitmq
+   podman-compose up -d postgres rabbitmq
    ```
 
 2. **Update application.properties** with local connection details
@@ -131,33 +136,34 @@ stompClient.connect({}, function(frame) {
    mvn spring-boot:run
    ```
 
-### Building the Docker Image
+### Building the Container Image
 
 ```bash
-docker build -t chat-app:latest .
+podman build -t chat-app:latest .
 ```
 
 ### Running Individual Services
 
 ```bash
 # Start only database
-docker-compose up -d postgres
+podman-compose up -d postgres
 
 # Start only RabbitMQ
-docker-compose up -d rabbitmq
+podman-compose up -d rabbitmq
 
 # Start API (requires postgres and rabbitmq)
-docker-compose up -d api
+podman-compose up -d api
 ```
 
-## Docker Features
+## Container Features
 
 - **Multi-stage build**: Separates build and runtime stages for smaller images
 - **JRE-only runtime**: Uses JRE instead of full JDK for reduced image size
 - **Health checks**: All services include health check configurations
 - **Service dependencies**: API waits for database and RabbitMQ to be healthy
 - **Named volumes**: Data persistence for PostgreSQL and RabbitMQ
-- **Network isolation**: Services communicate through dedicated Docker network
+- **Network isolation**: Services communicate through dedicated Podman network
+- **Rootless support**: Compatible with Podman's rootless container mode
 
 ## Environment Variables
 
@@ -195,13 +201,13 @@ You can use any WebSocket client or browser console to test WebSocket functional
 ## Stopping Services
 
 ```bash
-docker-compose down
+podman-compose down
 ```
 
 To also remove volumes (⚠️ this will delete all data):
 
 ```bash
-docker-compose down -v
+podman-compose down -v
 ```
 
 ## Troubleshooting
@@ -214,17 +220,27 @@ If ports 8080, 5432, or 5672 are already in use, modify the port mappings in `do
 
 Ensure PostgreSQL is healthy before starting the API:
 ```bash
-docker-compose ps postgres
+podman-compose ps postgres
+```
+
+Or using Podman directly:
+```bash
+podman ps --filter name=chat-postgres
+podman healthcheck run chat-postgres
 ```
 
 ### RabbitMQ Connection Issues
 
 Check RabbitMQ health:
 ```bash
-docker-compose ps rabbitmq
+podman-compose ps rabbitmq
 ```
 
 Access RabbitMQ Management UI at http://localhost:15672 to monitor queues and connections.
+
+### Rootless Podman Considerations
+
+If running Podman in rootless mode, be aware of port binding limitations. Ports below 1024 require additional configuration. The default ports used by this application (8080, 5432, 5672, 15672) are all above 1024 and should work without issues.
 
 ## Project Structure
 

@@ -1,4 +1,5 @@
 # Multi-stage build for Spring Boot application
+# Compatible with Podman and Docker
 
 # Stage 1: Build stage with Maven
 FROM maven:3.9-eclipse-temurin-17 AS build

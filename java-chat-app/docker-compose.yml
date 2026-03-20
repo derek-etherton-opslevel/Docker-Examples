@@ -1,3 +1,7 @@
+# Podman Compose configuration file
+# Also compatible with Docker Compose
+# Usage: podman-compose up -d
+#    or: podman compose up -d (using Podman's Docker Compose compatibility)
 version: '3.8'
 
 services:
