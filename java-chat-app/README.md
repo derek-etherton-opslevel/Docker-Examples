@@ -8,8 +8,8 @@ A real-time chat application built with Spring Boot, featuring WebSocket support
 - **WebSocket** support for real-time bidirectional communication
 - **PostgreSQL** database for message persistence
 - **RabbitMQ** message broker for asynchronous message processing
-- **Multi-stage Docker build** for optimized container images
-- **Docker Compose** setup for easy development and deployment
+- **Multi-stage Podman build** for optimized container images
+- **Podman Compose** setup for easy development and deployment
 
 ## Architecture
 
@@ -21,11 +21,11 @@ The application follows a microservices architecture pattern:
 
 ## Prerequisites
 
-- Docker and Docker Compose installed
-- Java 17+ (for local development without Docker)
+- Podman and Podman Compose installed
+- Java 17+ (for local development without Podman)
 - Maven 3.6+ (for local development)
 
-## Quick Start with Docker
+## Quick Start with Podman
 
 1. **Clone the repository** (if not already done):
    ```bash
@@ -40,17 +40,17 @@ The application follows a microservices architecture pattern:
 
 3. **Start all services**:
    ```bash
-   docker-compose up -d
+   podman-compose up -d
    ```
 
 4. **Check service status**:
    ```bash
-   docker-compose ps
+   podman-compose ps
    ```
 
 5. **View logs**:
    ```bash
-   docker-compose logs -f api
+   podman-compose logs -f api
    ```
 
 ## Services
@@ -117,11 +117,11 @@ stompClient.connect({}, function(frame) {
 
 ## Development
 
-### Local Development (without Docker)
+### Local Development (without Podman)
 
-1. **Start PostgreSQL and RabbitMQ** (using Docker Compose):
+1. **Start PostgreSQL and RabbitMQ** (using Podman Compose):
    ```bash
-   docker-compose up -d postgres rabbitmq
+   podman-compose up -d postgres rabbitmq
    ```
 
 2. **Update application.properties** with local connection details
@@ -131,33 +131,33 @@ stompClient.connect({}, function(frame) {
    mvn spring-boot:run
    ```
 
-### Building the Docker Image
+### Building the Podman Image
 
 ```bash
-docker build -t chat-app:latest .
+podman build -t chat-app:latest .
 ```
 
 ### Running Individual Services
 
 ```bash
 # Start only database
-docker-compose up -d postgres
+podman-compose up -d postgres
 
 # Start only RabbitMQ
-docker-compose up -d rabbitmq
+podman-compose up -d rabbitmq
 
 # Start API (requires postgres and rabbitmq)
-docker-compose up -d api
+podman-compose up -d api
 ```
 
-## Docker Features
+## Podman Features
 
 - **Multi-stage build**: Separates build and runtime stages for smaller images
 - **JRE-only runtime**: Uses JRE instead of full JDK for reduced image size
 - **Health checks**: All services include health check configurations
 - **Service dependencies**: API waits for database and RabbitMQ to be healthy
 - **Named volumes**: Data persistence for PostgreSQL and RabbitMQ
-- **Network isolation**: Services communicate through dedicated Docker network
+- **Network isolation**: Services communicate through dedicated Podman network
 
 ## Environment Variables
 
@@ -195,33 +195,33 @@ You can use any WebSocket client or browser console to test WebSocket functional
 ## Stopping Services
 
 ```bash
-docker-compose down
+podman-compose down
 ```
 
 To also remove volumes (⚠️ this will delete all data):
 
 ```bash
-docker-compose down -v
+podman-compose down -v
 ```
 
 ## Troubleshooting
 
 ### Port Already in Use
 
-If ports 8080, 5432, or 5672 are already in use, modify the port mappings in `docker-compose.yml` or set different values in `.env`.
+If ports 8080, 5432, or 5672 are already in use, modify the port mappings in `podman-compose.yml` or set different values in `.env`.
 
 ### Database Connection Issues
 
 Ensure PostgreSQL is healthy before starting the API:
 ```bash
-docker-compose ps postgres
+podman-compose ps postgres
 ```
 
 ### RabbitMQ Connection Issues
 
 Check RabbitMQ health:
 ```bash
-docker-compose ps rabbitmq
+podman-compose ps rabbitmq
 ```
 
 Access RabbitMQ Management UI at http://localhost:15672 to monitor queues and connections.
@@ -253,8 +253,8 @@ java-chat-app/
 │       │       └── MessageService.java
 │       └── resources/
 │           └── application.properties
-├── Dockerfile
-├── docker-compose.yml
+├── Containerfile
+├── podman-compose.yml
 ├── pom.xml
 ├── .env.example
 ├── .gitignore
