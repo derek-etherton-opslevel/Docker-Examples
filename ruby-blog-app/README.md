@@ -1,6 +1,6 @@
 # Ruby Blog App
 
-A full-featured blog platform built with Ruby on Rails 7, containerized with Docker. Features include user authentication, post management, comments, admin panel, and background job processing with Sidekiq.
+A full-featured blog platform built with Ruby on Rails 7, containerized with Podman. Features include user authentication, post management, comments, admin panel, and background job processing with Sidekiq.
 
 ## Features
 
@@ -14,7 +14,7 @@ A full-featured blog platform built with Ruby on Rails 7, containerized with Doc
 
 ## Architecture
 
-The application uses Docker Compose to orchestrate multiple services:
+The application uses Podman Compose to orchestrate multiple services:
 
 - **Rails**: Main application server (Puma)
 - **PostgreSQL**: Database for storing posts, users, and comments
@@ -24,7 +24,7 @@ The application uses Docker Compose to orchestrate multiple services:
 
 ## Prerequisites
 
-- Docker and Docker Compose installed
+- Podman and Podman Compose installed
 - At least 2GB of available RAM
 - Ports 80, 3000, 5432, and 6379 available
 
@@ -37,10 +37,10 @@ The application uses Docker Compose to orchestrate multiple services:
 ```
 
 The setup script will:
-- Check for Docker installation
+- Check for Podman installation
 - Create `.env` file from `.env.example`
 - Generate a secure `SECRET_KEY_BASE`
-- Build Docker images
+- Build container images
 - Start all services
 - Run database migrations
 - Seed the database with sample data
@@ -61,13 +61,13 @@ The setup script will:
 
 3. **Build and start services:**
    ```bash
-   docker-compose build
-   docker-compose up -d
+   podman-compose build
+   podman-compose up -d
    ```
 
 4. **Run database migrations:**
    ```bash
-   docker-compose exec rails bundle exec rails db:create db:migrate db:seed
+   podman-compose exec rails bundle exec rails db:create db:migrate db:seed
    ```
 
 ## Accessing the Application
@@ -88,37 +88,37 @@ After running the seed script, you can log in with:
   - Email: `user@blog.com`
   - Password: `password123`
 
-## Docker Services
+## Container Services
 
 ### View Logs
 
 ```bash
 # All services
-docker-compose logs -f
+podman-compose logs -f
 
 # Specific service
-docker-compose logs -f rails
-docker-compose logs -f sidekiq
-docker-compose logs -f nginx
+podman-compose logs -f rails
+podman-compose logs -f sidekiq
+podman-compose logs -f nginx
 ```
 
 ### Stop Services
 
 ```bash
-docker-compose down
+podman-compose down
 ```
 
 ### Stop and Remove Volumes
 
 ```bash
-docker-compose down -v
+podman-compose down -v
 ```
 
 ### Rebuild After Changes
 
 ```bash
-docker-compose build --no-cache
-docker-compose up -d
+podman-compose build --no-cache
+podman-compose up -d
 ```
 
 ## Development
@@ -126,25 +126,25 @@ docker-compose up -d
 ### Running Rails Console
 
 ```bash
-docker-compose exec rails bundle exec rails console
+podman-compose exec rails bundle exec rails console
 ```
 
 ### Running Database Migrations
 
 ```bash
-docker-compose exec rails bundle exec rails db:migrate
+podman-compose exec rails bundle exec rails db:migrate
 ```
 
 ### Creating a New Migration
 
 ```bash
-docker-compose exec rails bundle exec rails generate migration MigrationName
+podman-compose exec rails bundle exec rails generate migration MigrationName
 ```
 
 ### Accessing Database
 
 ```bash
-docker-compose exec postgres psql -U postgres -d blog_development
+podman-compose exec postgres psql -U postgres -d blog_development
 ```
 
 ## Environment Variables
@@ -175,14 +175,14 @@ ruby-blog-app/
 ├── db/
 │   ├── migrate/         # Database migrations
 │   └── seeds.rb         # Seed data
-├── docker-compose.yml    # Docker Compose configuration
-├── Dockerfile           # Multi-stage Docker build
+├── docker-compose.yml    # Podman Compose configuration
+├── Dockerfile           # Multi-stage container build
 ├── nginx.conf           # Nginx reverse proxy config
 ├── setup.sh             # Automated setup script
 └── README.md            # This file
 ```
 
-## Docker Features
+## Container Features
 
 ### Multi-Stage Build
 
@@ -213,14 +213,14 @@ If you see database connection errors:
 
 1. Check if PostgreSQL container is running:
    ```bash
-   docker-compose ps
+   podman-compose ps
    ```
 
 2. Verify database credentials in `.env`
 
 3. Check PostgreSQL logs:
    ```bash
-   docker-compose logs postgres
+   podman-compose logs postgres
    ```
 
 ### Port Already in Use
@@ -234,9 +234,9 @@ If ports 80, 3000, 5432, or 6379 are already in use:
 
 If assets fail to precompile:
 
-1. Rebuild the Docker image:
+1. Rebuild the container image:
    ```bash
-   docker-compose build --no-cache rails
+   podman-compose build --no-cache rails
    ```
 
 2. Check for missing dependencies in `Gemfile`
@@ -245,12 +245,12 @@ If assets fail to precompile:
 
 1. Check Sidekiq logs:
    ```bash
-   docker-compose logs sidekiq
+   podman-compose logs sidekiq
    ```
 
 2. Verify Redis connection:
    ```bash
-   docker-compose exec redis redis-cli ping
+   podman-compose exec redis redis-cli ping
    ```
 
 ## Production Considerations
