@@ -1,4 +1,4 @@
-# Multi-stage Dockerfile for Rails application
+# Multi-stage Containerfile for Rails application
 FROM ruby:3.2.0-slim as base
 
 # Install dependencies
