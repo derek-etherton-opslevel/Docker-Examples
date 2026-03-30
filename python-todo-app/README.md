@@ -1,6 +1,6 @@
 # Python Todo App
 
-A practical REST API Todo application built with Flask, PostgreSQL, and Redis, fully containerized with Docker.
+A practical REST API Todo application built with Flask, PostgreSQL, and Redis, fully containerized with Podman.
 
 ## Features
 
@@ -9,22 +9,22 @@ A practical REST API Todo application built with Flask, PostgreSQL, and Redis, f
 - ✅ Redis caching for improved performance
 - ✅ Health check endpoints
 - ✅ RESTful API design
-- ✅ Docker Compose multi-service setup
+- ✅ Podman Compose multi-service setup
 - ✅ Health checks for all services
 - ✅ Named volumes for data persistence
 
 ## Prerequisites
 
-- Docker (version 20.10 or later)
-- Docker Compose (version 2.0 or later)
+- Podman (version 4.0 or later)
+- Podman Compose (version 1.0 or later)
 
-If you don't have Docker installed, the `setup.sh` script can help guide you through installation.
+If you don't have Podman installed, the `setup.sh` script can help guide you through installation.
 
 ## Quick Start
 
 ### Option 1: Using the Setup Script (Recommended)
 
-The setup script will check for Docker, create environment files, and start all services:
+The setup script will check for Podman, create environment files, and start all services:
 
 ```bash
 chmod +x setup.sh
@@ -45,12 +45,7 @@ chmod +x setup.sh
 
 3. **Build and start services:**
    ```bash
-   docker-compose up -d
-   ```
-
-   Or with newer Docker versions:
-   ```bash
-   docker compose up -d
+   podman-compose up -d
    ```
 
 4. **Verify services are running:**
@@ -63,7 +58,7 @@ chmod +x setup.sh
 For development with hot-reload and volume mounting:
 
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+podman-compose -f docker-compose.yml -f docker-compose.dev.yml up
 ```
 
 ## API Endpoints
@@ -134,9 +129,9 @@ DELETE /api/todos/:id
 POST /api/todos/:id/toggle
 ```
 
-## Docker Architecture
+## Podman Architecture
 
-This application uses a multi-service Docker Compose setup:
+This application uses a multi-service Podman Compose setup:
 
 - **app**: Flask application (Python 3.11)
 - **postgres**: PostgreSQL 15 database
@@ -170,41 +165,41 @@ Create a `.env` file (or copy from `.env.example`) to customize:
 
 ### View Logs
 ```bash
-docker-compose logs -f
-docker-compose logs -f app      # App logs only
-docker-compose logs -f postgres # Database logs only
-docker-compose logs -f redis    # Redis logs only
+podman-compose logs -f
+podman-compose logs -f app      # App logs only
+podman-compose logs -f postgres # Database logs only
+podman-compose logs -f redis    # Redis logs only
 ```
 
 ### Stop Services
 ```bash
-docker-compose down
+podman-compose down
 ```
 
 ### Stop and Remove Volumes
 ```bash
-docker-compose down -v
+podman-compose down -v
 ```
 
 ### Rebuild After Code Changes
 ```bash
-docker-compose build --no-cache
-docker-compose up -d
+podman-compose build --no-cache
+podman-compose up -d
 ```
 
 ### Access Database
 ```bash
-docker-compose exec postgres psql -U todo_user -d todo_db
+podman-compose exec postgres psql -U todo_user -d todo_db
 ```
 
 ### Access Redis CLI
 ```bash
-docker-compose exec redis redis-cli
+podman-compose exec redis redis-cli
 ```
 
 ### Restart a Service
 ```bash
-docker-compose restart app
+podman-compose restart app
 ```
 
 ## Testing the API
@@ -241,8 +236,8 @@ curl -X DELETE http://localhost:5000/api/todos/1
 python-todo-app/
 ├── app.py                 # Flask application
 ├── requirements.txt       # Python dependencies
-├── Dockerfile            # Multi-stage Docker build
-├── docker-compose.yml    # Production Docker Compose config
+├── Dockerfile            # Multi-stage Podman build
+├── docker-compose.yml    # Production Podman Compose config
 ├── docker-compose.dev.yml # Development overrides
 ├── setup.sh              # Setup script
 ├── .env.example          # Environment variables template
@@ -254,16 +249,16 @@ python-todo-app/
 
 ### Services won't start
 - Check if ports 5000, 5432, or 6379 are already in use
-- Verify Docker daemon is running: `docker info`
-- Check logs: `docker-compose logs`
+- Verify Podman is accessible: `podman info`
+- Check logs: `podman-compose logs`
 
 ### Database connection errors
-- Ensure PostgreSQL container is healthy: `docker-compose ps`
+- Ensure PostgreSQL container is healthy: `podman-compose ps`
 - Wait a few seconds after starting for database to initialize
 
 ### Redis connection errors
-- Check Redis container status: `docker-compose ps redis`
-- Verify Redis is accessible: `docker-compose exec redis redis-cli ping`
+- Check Redis container status: `podman-compose ps redis`
+- Verify Redis is accessible: `podman-compose exec redis redis-cli ping`
 
 ## License
 
