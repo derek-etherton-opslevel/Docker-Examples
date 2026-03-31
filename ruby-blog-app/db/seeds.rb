@@ -32,8 +32,8 @@ if Post.count == 0
   
   Post.create!(
     user: admin,
-    title: 'Docker and Rails',
-    content: 'Docker makes it easy to containerize Rails applications. This blog is running in Docker containers with PostgreSQL, Redis, and Nginx.',
+    title: 'Podman and Rails',
+    content: 'Podman makes it easy to containerize Rails applications with enhanced security through rootless containers. This blog is running in Podman containers with PostgreSQL, Redis, and Nginx.',
     published: true
   )
 end
