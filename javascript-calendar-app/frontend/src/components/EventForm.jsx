@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import './EventForm.css';
 
 const EventForm = ({ event, initialDate, onSave, onDelete, onClose }) => {
@@ -157,6 +158,21 @@ const EventForm = ({ event, initialDate, onSave, onDelete, onClose }) => {
       </div>
     </div>
   );
+};
+
+EventForm.propTypes = {
+  event: PropTypes.shape({
+    _id: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    startDate: PropTypes.string,
+    endDate: PropTypes.string,
+    color: PropTypes.string,
+  }),
+  initialDate: PropTypes.instanceOf(Date).isRequired,
+  onSave: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default EventForm;

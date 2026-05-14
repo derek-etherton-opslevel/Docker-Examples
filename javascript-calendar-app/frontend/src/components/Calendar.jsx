@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import './Calendar.css';
 
 const Calendar = ({ events, selectedDate, onDateClick, onEventClick }) => {
@@ -119,6 +120,21 @@ const Calendar = ({ events, selectedDate, onDateClick, onEventClick }) => {
       </div>
     </div>
   );
+};
+
+Calendar.propTypes = {
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      startDate: PropTypes.string.isRequired,
+      endDate: PropTypes.string.isRequired,
+      color: PropTypes.string,
+    })
+  ).isRequired,
+  selectedDate: PropTypes.instanceOf(Date).isRequired,
+  onDateClick: PropTypes.func.isRequired,
+  onEventClick: PropTypes.func.isRequired,
 };
 
 export default Calendar;

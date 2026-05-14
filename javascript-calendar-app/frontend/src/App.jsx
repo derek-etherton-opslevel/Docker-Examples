@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Calendar from './components/Calendar';
 import EventForm from './components/EventForm';
 import { getEvents, createEvent, updateEvent, deleteEvent } from './services/api';
