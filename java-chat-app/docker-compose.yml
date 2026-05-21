@@ -1,82 +1,135 @@
+# Docker Compose configuration for Chat Application
+# This file defines a multi-service architecture with:
+# - PostgreSQL database for message persistence
+# - RabbitMQ message broker for asynchronous processing
+# - Spring Boot application (chat API)
+# Version 3.8 provides compatibility with Docker Engine 18.06.0+
 version: '3.8'
 
 services:
+  # PostgreSQL Database Service
+  # Stores chat messages and provides persistent storage
   postgres:
+    # Using Alpine-based PostgreSQL 15 for smaller image size
     image: postgres:15-alpine
+    # Container name for easy identification and connection
     container_name: chat-postgres
+    # Environment variables for database configuration
+    # Values can be overridden using .env file
     environment:
-      POSTGRES_DB: ${DB_NAME:-chatdb}
-      POSTGRES_USER: ${DB_USER:-chatuser}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-chatpass}
+      POSTGRES_DB: ${DB_NAME:-chatdb}           # Database name (default: chatdb)
+      POSTGRES_USER: ${DB_USER:-chatuser}       # Database user (default: chatuser)
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-chatpass} # Database password (default: chatpass)
+    # Port mapping: host:container
+    # Exposes PostgreSQL on host machine for direct access if needed
     ports:
       - "${DB_PORT:-5432}:5432"
+    # Named volume for data persistence across container restarts
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    # Health check to ensure database is ready before starting dependent services
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-chatuser} -d ${DB_NAME:-chatdb}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 10s    # Check every 10 seconds
+      timeout: 5s      # Timeout if check takes longer than 5 seconds
+      retries: 5       # Mark unhealthy after 5 consecutive failures
+    # Connect to custom network for inter-service communication
     networks:
       - chat-network
 
+  # RabbitMQ Message Broker Service
+  # Handles asynchronous message processing and distribution
   rabbitmq:
+    # Alpine-based RabbitMQ 3.12 with management plugin for web UI
     image: rabbitmq:3.12-management-alpine
+    # Container name for easy identification and connection
     container_name: chat-rabbitmq
+    # Environment variables for RabbitMQ configuration
     environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-guest}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}     # Admin username (default: guest)
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-guest} # Admin password (default: guest)
+    # Port mappings
     ports:
-      - "${RABBITMQ_PORT:-5672}:5672"
-      - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
+      - "${RABBITMQ_PORT:-5672}:5672"               # AMQP protocol port for message exchange
+      - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"  # Management UI port (accessible at http://localhost:15672)
+    # Named volume for data persistence (queues, exchanges, etc.)
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    # Health check to ensure RabbitMQ is ready before starting dependent services
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 10s    # Check every 10 seconds
+      timeout: 5s      # Timeout if check takes longer than 5 seconds
+      retries: 5       # Mark unhealthy after 5 consecutive failures
+    # Connect to custom network for inter-service communication
     networks:
       - chat-network
 
+  # Chat Application API Service
+  # Spring Boot application providing REST API and WebSocket endpoints
   api:
+    # Build configuration - uses Dockerfile in current directory
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: .           # Build context is the current directory
+      dockerfile: Dockerfile # Use the Dockerfile in root
+    # Container name for easy identification
     container_name: chat-api
+    # Environment variables for application configuration
+    # These override default values in application.properties
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: ${DB_NAME:-chatdb}
-      DB_USER: ${DB_USER:-chatuser}
-      DB_PASSWORD: ${DB_PASSWORD:-chatpass}
-      RABBITMQ_HOST: rabbitmq
-      RABBITMQ_PORT: 5672
-      RABBITMQ_USER: ${RABBITMQ_USER:-guest}
-      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-guest}
+      # Database connection settings
+      DB_HOST: postgres                            # Use service name for internal DNS resolution
+      DB_PORT: 5432                                # PostgreSQL port
+      DB_NAME: ${DB_NAME:-chatdb}                  # Database name
+      DB_USER: ${DB_USER:-chatuser}                # Database user
+      DB_PASSWORD: ${DB_PASSWORD:-chatpass}        # Database password
+      # RabbitMQ connection settings
+      RABBITMQ_HOST: rabbitmq                      # Use service name for internal DNS resolution
+      RABBITMQ_PORT: 5672                          # RabbitMQ AMQP port
+      RABBITMQ_USER: ${RABBITMQ_USER:-guest}       # RabbitMQ username
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-guest} # RabbitMQ password
+    # Port mapping: host:container
+    # Exposes the application API on the host machine
     ports:
       - "${API_PORT:-8080}:8080"
+    # Service dependencies with health check conditions
+    # Ensures database and message broker are ready before starting the API
     depends_on:
       postgres:
-        condition: service_healthy
+        condition: service_healthy  # Wait for PostgreSQL to be healthy
       rabbitmq:
-        condition: service_healthy
+        condition: service_healthy  # Wait for RabbitMQ to be healthy
+    # Health check for the Spring Boot application
+    # Uses the actuator health endpoint
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+      interval: 30s      # Check every 30 seconds
+      timeout: 10s       # Timeout if check takes longer than 10 seconds
+      retries: 3         # Mark unhealthy after 3 consecutive failures
+      start_period: 40s  # Give the app 40 seconds to start before checking
+    # Connect to custom network for inter-service communication
     networks:
       - chat-network
+    # Restart policy: restart unless explicitly stopped
     restart: unless-stopped
 
+# Named volumes for data persistence
+# These volumes persist data even when containers are removed
 volumes:
+  # PostgreSQL data volume
+  # Stores database files to persist messages across container restarts
   postgres_data:
-    driver: local
-  rabbitmq_data:
-    driver: local
+    driver: local  # Use local driver (default, stores on host filesystem)
 
+  # RabbitMQ data volume
+  # Stores queue definitions, messages, and configuration
+  rabbitmq_data:
+    driver: local  # Use local driver (default, stores on host filesystem)
+
+# Custom network for inter-service communication
+# Allows containers to communicate using service names as hostnames
 networks:
+  # Bridge network for the chat application
+  # Provides isolation from other Docker networks and enables service discovery
   chat-network:
-    driver: bridge
+    driver: bridge  # Use bridge driver for container-to-container networking
