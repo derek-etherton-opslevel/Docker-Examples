@@ -16,12 +16,16 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 # Runtime stage
 FROM alpine:latest
 
-RUN apk --no-cache add ca-certificates wget
+RUN apk --no-cache add ca-certificates wget && \
+    addgroup -S appgroup && adduser -S appuser -G appgroup
 
-WORKDIR /root/
+WORKDIR /app
 
 # Copy the binary from builder
 COPY --from=builder /app/main .
+
+# Run as non-root user (Podman rootless best practice)
+USER appuser
 
 EXPOSE 8080
 
