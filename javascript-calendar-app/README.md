@@ -35,7 +35,7 @@ A full-stack calendar application built with React (Vite) frontend, Express.js b
 ## Prerequisites
 
 - Podman (version 4.0 or later)
-- Podman Compose (version 1.0 or later)
+- Podman Compose (`podman compose` subcommand, available in Podman 4.7 or later)
 
 ## Quick Start
 
@@ -48,7 +48,7 @@ A full-stack calendar application built with React (Vite) frontend, Express.js b
 
 2. Start all services with Podman Compose:
    ```bash
-   podman-compose up -d
+   podman compose up -d
    ```
 
 3. Access the application:
@@ -58,7 +58,7 @@ A full-stack calendar application built with React (Vite) frontend, Express.js b
 
 4. Stop the services:
    ```bash
-   podman-compose down
+   podman compose down
    ```
 
 ### Development Mode
@@ -67,7 +67,7 @@ For development with hot reload:
 
 1. Start services in development mode:
    ```bash
-   podman-compose -f docker-compose.yml -f docker-compose.dev.yml up
+   podman compose -f docker-compose.yml -f docker-compose.dev.yml up
    ```
 
 2. Access the application:
@@ -187,13 +187,13 @@ npm run dev
 
 Build all images:
 ```bash
-podman-compose build
+podman compose build
 ```
 
 Build specific service:
 ```bash
-podman-compose build frontend
-podman-compose build backend
+podman compose build frontend
+podman compose build backend
 ```
 
 ## Data Persistence
@@ -202,14 +202,14 @@ MongoDB data is persisted using a named Podman volume (`mongodb_data`). The data
 
 To remove all data:
 ```bash
-podman-compose down -v
+podman compose down -v
 ```
 
 ## Troubleshooting
 
 ### Port Already in Use
 
-If ports 80, 3001, or 27017 are already in use, modify the port mappings in `docker-compose.yml`:
+If ports 80, 3001, or 27017 are already in use, modify the port mappings in the compose file (`docker-compose.yml`):
 
 ```yaml
 ports:
