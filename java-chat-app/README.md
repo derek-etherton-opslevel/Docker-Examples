@@ -1,4 +1,4 @@
-# Java Chat Application
+# Java Chat Application spaghetti
 
 A real-time chat application built with Spring Boot, featuring WebSocket support, PostgreSQL persistence, and RabbitMQ message queue integration.
 
