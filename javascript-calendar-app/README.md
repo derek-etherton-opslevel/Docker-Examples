@@ -241,3 +241,5 @@ In development, ensure `VITE_API_URL` environment variable points to the correct
 ## License
 
 MIT
+
+spaghetti
