@@ -264,3 +264,5 @@ java-chat-app/
 ## License
 
 This is a sample application for demonstration purposes.
+
+spaghetti
