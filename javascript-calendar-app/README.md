@@ -1,4 +1,4 @@
-# Calendar App
+# Calendar App spaghetti
 
 A full-stack calendar application built with React (Vite) frontend, Express.js backend, and MongoDB database. This project demonstrates Podman containerization with multi-stage builds, separate frontend/backend containers, and service orchestration.
 
