@@ -67,7 +67,7 @@ For development with hot reload:
 
 1. Start services in development mode:
    ```bash
-   podman-compose -f docker-compose.yml -f docker-compose.dev.yml up
+   podman-compose -f compose.yml -f compose.dev.yml up
    ```
 
 2. Access the application:
@@ -106,8 +106,8 @@ javascript-calendar-app/
 │   ├── Containerfile
 │   ├── package.json
 │   └── .containerignore
-├── docker-compose.yml
-├── docker-compose.dev.yml
+├── compose.yml
+├── compose.dev.yml
 ├── .gitignore
 └── README.md
 ```
@@ -209,7 +209,7 @@ podman-compose down -v
 
 ### Port Already in Use
 
-If ports 80, 3001, or 27017 are already in use, modify the port mappings in `docker-compose.yml`:
+If ports 80, 3001, or 27017 are already in use, modify the port mappings in `compose.yml`:
 
 ```yaml
 ports:
