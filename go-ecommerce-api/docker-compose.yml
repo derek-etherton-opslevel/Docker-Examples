@@ -51,7 +51,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Containerfile
     container_name: go-ecommerce-api
     environment:
       PORT: ${PORT:-8080}
